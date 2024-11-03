@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>Admin</title>
 
-    <link rel="apple-touch-icon" href="<?= base_url('assets/images/ico/apple-icon-120.png')?>">
-	<link rel="shortcut icon" type="image/x-icon" href="<?= base_url('assets/images/logo/Logo-Apple.png')?>">
+    <link rel="apple-touch-icon" href="<?= base_url('assets/img/logo-khab-khun.png')?>">
+	<link rel="shortcut icon" type="image/x-icon" href="<?= base_url('assets/img/logo-khab-khun.png')?>">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link href="<?= base_url('assets/css/fonts/css93c2.css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet')?>">
 
@@ -17,7 +17,6 @@
 
     <!-- BEGIN: Page CSS-->
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/core/menu/menu-types/vertical-menu.min.css')?>">
-	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/core/colors/palette-gradient.min.css')?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/core/colors/palette-gradient.min.css')?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/pages/chat-application.css')?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/pages/dashboard-analytics.min.css')?>">
@@ -54,6 +53,20 @@
 	<link rel="stylesheet" href="<?= base_url('assets/css/plugins/easy-autocomplete/easy-autocomplete.themes.min.css')?>">
 	<!-- END: Vendor CSS-->
 
+	 <!-- DASHBOARD -->
+
+	<link rel="stylesheet" href="<?= base_url('assets-dashboard/plugins/fontawesome/css/all.min.css')?>" />
+	<link rel="stylesheet" href="<?= base_url('assets-dashboard/plugins/fontawesome/css/fontawesome.min.css')?>" />
+
+	<link rel="stylesheet" href="<?= base_url('assets-dashboard/css/fullcalendar.min.css')?>" />
+
+	<link rel="stylesheet" href="<?= base_url('assets-dashboard/css/dataTables.bootstrap4.min.css')?>" />
+
+	<link rel="stylesheet" href="<?= base_url('assets-dashboard/plugins/morris/morris.css')?>" />
+
+	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 
@@ -61,10 +74,17 @@
 
 	
 <body class="vertical-layout vertical-menu 2-columns fixed-navbar" data-open="click" data-menu="vertical-menu"
-	  data-color="bg-gradient-x-blue-green" data-col="2-columns">
+	  data-color="bg-gradient-x-orange-yellow" data-col="2-columns">
 
-	  
-
+	  <script>
+        
+        setTimeout(function() {
+            var alert = document.getElementById('feedback');
+            if (alert) {
+                alert.style.display = 'none'; 
+            }
+        }, 4000); 
+    	</script>
 
 <!-- BEGIN: Header-->
 <nav
@@ -82,20 +102,27 @@
 								class="ficon ft-maximize"></i></a></li>
 				</ul>
 				<ul class="nav navbar-nav float-right">
-					<li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link"
-																   href="#" data-toggle="dropdown"> <span
-								class="avatar avatar-online"><img
-									src="../assets/images/portrait/small/profil-circle-512.png"
-									alt="avatar"></span></a>
+					<li class="dropdown dropdown-user nav-item">
+						<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+							<span class="avatar avatar-online">
+								<img src="<?= base_url('assets/images/portrait/small/profil-circle-512.png')?>" alt="avatar">
+							</span>
+							<span class="user-name"><?php echo $_SESSION['nama_lengkap'];?></span> <!-- Display the user's name here -->
+						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<div class="arrow_box_right">
+								<a class="dropdown-item" href="<?= base_url('admin/profile/' . $_SESSION['id'])?>">
+									<i class="ft-user"></i> Profile
+								</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="logout.php"><i class="ft-power"></i>
-									Logout</a>
+								<a class="dropdown-item" href="<?= base_url('admin/logout')?>">
+									<i class="ft-power"></i> Logout
+								</a>
 							</div>
 						</div>
 					</li>
 				</ul>
+
 			</div>
 		</div>
 	</div>
@@ -105,14 +132,14 @@
 
 <!-- BEGIN: Main Menu-->
 <div class="main-menu menu-fixed menu-light menu-accordion d-print-none menu-shadow " data-scroll-to-active="true"
-	 data-img="../assets/images/backgrounds/04.jpg">
+	 data-img="<?= base_url('assets/images/backgrounds/04.jpg')?>">
 	<div class="navbar-header">
 		<ul class="nav navbar-nav flex-row">
 			<li class="nav-item mr-auto"><a class="navbar-brand" href="">
 					<img class="brand-logo"
 						 alt="Chameleon admin logo"
-						 src="../assets/images/logo/Logo-Apple.png"/>
-					<h3 class="brand-text"> Admin</h3></a></li>
+						 src="<?= base_url('../assets/img/logo-khab-khun.png')?>"/>
+					<h3 class="brand-text"> Khab Khun</h3></a></li>
 			<li class="nav-item d-md-none"><a class="nav-link close-navbar"><i class="ft-x"></i></a></li>
 		</ul>
 	</div>
@@ -120,28 +147,29 @@
 	<div class="main-menu-content">
 		<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 			<li class="nav-item"><a
-					href=""><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
+					href="<?= base_url('admin/dashboard')?>"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
 			</li>
 			<li class="nav-item"><a href="#"><i class="ft-layers">
             </i><span class="menu-title" data-i18n="">Data Master</span></a>
 				<ul class="menu-content">
 
 					<li class="">
-                        <a class="menu-item" href="">
+                        <a class="menu-item" href="<?= base_url('admin/data_produk')?>">
                             <i class="bx bx-data"> </i> 
                             Data Produk</a>
 					</li>
-					<li class="">
-                        <a class="menu-item" href="">
+					<!-- <li class="">
+                        <a class="menu-item" href="<?= base_url('admin/data_kategori')?>">
                             <i class="bx bx-data"> </i> 
                             Data Kategori</a>
-					</li>
+					</li> -->
+					<?php if($_SESSION['level']=="owner"){?>
 					<li class="">
-                        <a class="menu-item" href="">
+                        <a class="menu-item" href="<?= base_url('admin/data_akses')?>">
                             <i class="ft-users"> </i> 
-                            Data Akses</a>
+                            Data Karyawan</a>
 					</li>
-					
+					<?php }?>
 				</ul>
 			</li>
 
@@ -151,7 +179,7 @@
 					</li>
 			
 			<li>
-					<a class="menu-item" href=""><i class="ft-power"></i>
+					<a class="menu-item" href="<?= base_url('admin/logout')?>"><i class="ft-power"></i>
 									Logout</a>
 					</li>
 		</ul>
@@ -164,6 +192,25 @@
 <div class="app-content content d-print-none">
 	<div class="content-wrapper">
 		<div class="content-wrapper-before d-print-none">
+
+		<?php if (session()->getFlashdata('alert') == 'login_sukses'): ?>
+        <div style="position:absolute;width:100%;" class="alert alert-success alert-dismissible animated fadeInDown" id="feedback" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            Login berhasil!
+        </div>
+		<?php elseif (session()->getFlashdata('alert') === 'akses_denied'): ?>
+                <!-- <div class="alert alert-danger">Anda belum login.</div> -->
+                <script>
+                Swal.fire({
+                  title: 'Access Denied!',
+                  text: 'Anda tidak bisa akses halaman tersebut!',
+                  icon: 'error',
+                  confirmButtonText: 'Oke',
+                });
+                </script>
+    	<?php endif; ?>
             
         </div>
 		<div class="content-header row d-print-none">
